@@ -8,24 +8,24 @@ try{
 	$api_secret 	= '';
 	
 	require_once 'library/Dynaccount_account_API.php';
-	$Dyn = new Dynaccount\Account_API($api_id, $api_key, $api_secret);
+	$Dyn = new \Dynaccount\Account_API($api_id, $api_key, $api_secret);
 	
 	//	Open connection to Dynaccount API
 	$Dyn->connect();
 	
 	//	Get
-	/*$table = 'account';
-	$id = 0;
-	$select = [];
-	$where = [];
-	$order = [];
-	$limit = '';
+	/*$table 	= 'account';
+	$id 		= 0;
+	$select 	= [];
+	$where 		= [];
+	$order 		= [];
+	$limit 		= '';
 	$result = $Dyn->get($table, $id, $select, $where, $order, $limit);
 	print_r($result);*/
 	
 	//	Put
-	/*$table = 'account';
-	$id = 0;
+	/*$table 	= 'account';
+	$id 		= 0;
 	$fields = [
 		'account_id_'		=> 1,
 		'name'				=> 'heheheh',
@@ -68,17 +68,18 @@ try{
 	print_r($result);*/
 	
 	//	Delete
-	/*$table = 'account';
-	$id = 0;
+	/*$table 	= 'account';
+	$id 		= 0;
 	$result = $Dyn->delete($table, $id);
 	print_r($result);*/
 	
 	//	Action
 	/*$action = 'send_debtor_invoice';
 	$params = [
-		'invoice_id' => 0,
-		'email' => 'alias@domain.com',
-		'msg' => 'weeeee'
+		'invoice_id'	=> 0,
+		'email'			=> 'to@example.com',
+		'msg'			=> 'weeeee',
+		'is_attached'	=> 'NO'
 	];
 	$result = $Dyn->action($action, $params);
 	print_r($result);*/
@@ -86,14 +87,15 @@ try{
 	//	Upload voucher
 	/*$label = 'test bilag';
 	$files = [
-		'test_bilag.jpg'
+		'/root/test.pdf'
 	];
 	$from = 'username or email';
-	$result = $Dyn->upload_voucher($label, $files, $from);*/
+	$result = $Dyn->upload_voucher($label, $files, $from);
+	print_r($result);*/
 	
 	//	Close connection to Dynaccount API
 	$Dyn->disconnect();
 }
-catch(Dynaccount\Error $e){
+catch(\Dynaccount\Error $e){
 	echo 'Error: '.$e->getMessage();
 }

@@ -129,17 +129,12 @@ abstract class API {
 		}
 		
 		if($this->print_response){
-			echo "$response\n";
+			fwrite(STDERR, "$response\n");
 		}
 		
 		if(curl_getinfo($this->socket, CURLINFO_CONTENT_TYPE) == self::CONTENT_JSON){
 			$response = json_decode($response, true);
 		}
-		
-		/*$http_code = curl_getinfo($this->socket, CURLINFO_HTTP_CODE);
-		if($http_code != 200){
-			throw new Error("HTTP $http_code: $url ".$this->flatten_errors($response), $http_code);
-		}*/
 		
 		if($return_headers){
 			return [
@@ -161,19 +156,6 @@ abstract class API {
 			$table,
 			$id
 		])).'/';
-	}
-	
-	public function flatten_errors(array $response): string{
-		if(isset($response['error'])){
-			$errors = [];
-			foreach($response['error'] as $key => $value){
-				$errors[] = "$key=$value";
-			}
-			
-			return implode(', ', $errors);
-		}
-		
-		return '';
 	}
 	
 	protected function generate_hash(string $url, string $body): string{
