@@ -1,7 +1,7 @@
 <?php
 
 header('content-type: text/plain');
-
+//
 try{
 	$api_id 		= 0;
 	$api_key 		= '';
