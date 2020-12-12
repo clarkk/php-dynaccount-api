@@ -1,10 +1,8 @@
 <?php
 
-namespace Dynaccount;
+namespace Dynaccount_API;
 
-require_once 'Dynaccount_account_API.php';
-
-class Webshop_API extends Account_API {
+class Webshop extends Account {
 	
 	/**
 	*	Get draft where to book accountings

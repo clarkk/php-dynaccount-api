@@ -1,6 +1,6 @@
 <?php
 
-namespace Dynaccount;
+namespace Dynaccount_API;
 
 abstract class API {
 	

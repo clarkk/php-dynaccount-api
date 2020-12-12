@@ -1,10 +1,8 @@
 <?php
 
-namespace Dynaccount;
+namespace Dynaccount_API;
 
-require_once 'Dynaccount_API.php';
-
-class Account_API extends API {
+class Account extends API {
 	
 	protected $api_id 			= 0;
 	protected $api_key			= '';

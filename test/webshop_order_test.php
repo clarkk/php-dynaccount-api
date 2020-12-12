@@ -14,8 +14,7 @@ try{
 	$api_key 	= '';
 	$api_secret = '';
 	
-	require_once 'library/Dynaccount_webshop_API.php';
-	$Dyn = new \Dynaccount\Webshop_API($api_id, $api_key, $api_secret);
+	$Dyn = new \Dynaccount_API\Webshop($api_id, $api_key, $api_secret);
 	
 	//	Open connection to Dynaccount API
 	$Dyn->connect();
@@ -54,6 +53,6 @@ try{
 	//	Close connection to Dynaccount API
 	$Dyn->disconnect();
 }
-catch(\Dynaccount\Error $e){
+catch(\Dynaccount_API\Error $e){
 	echo 'Error: '.$e->getMessage();
 }
