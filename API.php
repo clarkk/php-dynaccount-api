@@ -134,6 +134,10 @@ abstract class API {
 		
 		if(curl_getinfo($this->socket, CURLINFO_CONTENT_TYPE) == self::CONTENT_JSON){
 			$response = json_decode($response, true);
+			
+			$response = array_merge([
+				'http_code' => curl_getinfo($this->socket, CURLINFO_HTTP_CODE)
+			], $response);
 		}
 		
 		if($return_headers){
