@@ -51,7 +51,7 @@ abstract class API {
 		$this->boundary = md5($api_key);
 	}
 	
-	public function connect(bool $ssl=true, bool $verbose=false, bool $print_response=false){
+	public function connect(bool $ssl=true, bool $verbose=false, bool $print_response=false, bool $ssl_verify=true){
 		$this->url = ($ssl ? 'https://' : 'http://').$this->host;
 		
 		$this->print_response = $print_response;
@@ -61,7 +61,8 @@ abstract class API {
 			CURLOPT_RETURNTRANSFER 	=> true,
 			CURLOPT_VERBOSE 		=> $verbose,
 			CURLOPT_ENCODING 		=> '',
-			CURLOPT_HTTP_VERSION 	=> CURL_HTTP_VERSION_2_0
+			CURLOPT_HTTP_VERSION 	=> CURL_HTTP_VERSION_2_0,
+			CURLOPT_SSL_VERIFYPEER 	=> $ssl_verify
 		]);
 		
 		if($verbose){
