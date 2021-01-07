@@ -121,8 +121,10 @@ abstract class API {
 			});
 		}
 		
-		if(!$response = curl_exec($this->socket)){
-			throw new Error('HTTP request failed: '.curl_error($this->socket));
+		$response = curl_exec($this->socket);
+		
+		if($response === false){
+			throw new Error(curl_error($this->socket));
 		}
 		
 		if($this->out){
@@ -161,6 +163,19 @@ abstract class API {
 			$table,
 			$id
 		])).'/';
+	}
+	
+	public function flatten_errors(array $response): ?string{
+		if(empty($response['error'])){
+			return null;
+		}
+		
+		$errors = [];
+		foreach($response['error'] as $field => $error){
+			$errors[] = $field.'='.$error;
+		}
+		
+		return implode(', ', $errors);
 	}
 	
 	protected function generate_hash(string $url, string $body): string{
