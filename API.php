@@ -136,21 +136,26 @@ abstract class API {
 		}
 		
 		if(curl_getinfo($this->socket, CURLINFO_CONTENT_TYPE) == self::CONTENT_JSON){
-			$response = json_decode($response, true);
+			if(!$output = json_decode($response, true)){
+				$output = ['result' => $response];
+			}
 			
-			$response = array_merge([
+			$output = array_merge([
 				'http_code' => curl_getinfo($this->socket, CURLINFO_HTTP_CODE)
-			], $response);
+			], $output);
+		}
+		else{
+			$output = $response;
 		}
 		
 		if($return_headers){
 			return [
 				'headers'	=> $response_headers,
-				'response'	=> $response
+				'response'	=> $output
 			];
 		}
 		else{
-			return $response;
+			return $output;
 		}
 	}
 	
