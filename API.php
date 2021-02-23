@@ -124,7 +124,20 @@ abstract class API {
 		$response = curl_exec($this->socket);
 		
 		if($response === false){
-			throw new Error(curl_error($this->socket));
+			switch($err_code = curl_errno($this->socket)){
+				//	Retry: Could not resolve host
+				case 6:
+					sleep(5);
+					$response = curl_exec($this->socket);
+					if($response === false){
+						throw new Error(curl_errno($this->socket).': '.curl_error($this->socket));
+					}
+					
+					break;
+				
+				default:
+					throw new Error($err_code.': '.curl_error($this->socket));
+			}
 		}
 		
 		if($this->out){
