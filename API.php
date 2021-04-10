@@ -140,7 +140,7 @@ abstract class API {
 			}
 		}
 		
-		if($this->out){
+		if(is_resource($this->out)){
 			fclose($this->out);
 		}
 		
