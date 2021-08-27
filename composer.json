@@ -1,0 +1,24 @@
+{
+  "name": "clarkk/php-dynaccount-api",
+  "description": "Helper-functions for accessing the Dynaccount API",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "homepage": "https://dynaccount.dk",
+  "authors": [
+    {
+      "name": "Dynaccount.dk",
+      "email": "support@dynaccount.com"
+    },
+    {
+      "name": "Mads",
+      "email": "mads@gartneriet.dk"
+    }
+  ],
+  "require": {
+  },
+  "autoload": {
+    "psr-4": {
+      "Dynaccount_API\\": "./"
+    }
+  }
+}
