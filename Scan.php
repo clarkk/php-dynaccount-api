@@ -39,7 +39,7 @@ class Scan extends API {
 		return $this->scan_response($result);
 	}
 	
-	public function scan_invoice(string $country, string $vatno, string $file_contents, string $callback='', bool $process_skip=false, int $ocr_delay=0){
+	public function scan_invoice(string $country, string $vatno, string $file_contents, string $callback='', bool $process_skip=false, int $ocr_delay=0, bool $return_processed_file=false){
 		$this->check_connection();
 		
 		$hash_base = '';
@@ -59,6 +59,9 @@ class Scan extends API {
 		if($process_skip){
 			$data['process']	= 'SKIP';
 			$data['ocr_delay']	= $ocr_delay;
+		}
+		elseif($return_processed_file){
+			$data['process']	= 'RETURN';
 		}
 		
 		$body = $this->form_json('json', $data, $hash_base)
