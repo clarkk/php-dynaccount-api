@@ -11,12 +11,9 @@ class Service extends API {
 	protected $host 			= 'service.dynaccount.com';
 	protected $api_version 		= 'v1';
 	
-	public function send_document(string $file_contents){
+	public function send_document(string $input){
 		$this->check_connection();
 		
-		$hash_base = '';
-		$body = $this->form_file('file', $file_contents, 'file.xml', $hash_base);
-		
-		return $this->request($this->url_path('send_document'), $body, $hash_base);
+		return $this->request($this->url_path('send_document'), $input);
 	}
 }
