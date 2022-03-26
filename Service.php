@@ -11,9 +11,9 @@ class Service extends API {
 	protected $host 			= 'service.dynaccount.com';
 	protected $api_version 		= 'v1';
 	
-	public function send_document(string $input){
+	public function send_ubl_document(string $input){
 		$this->check_connection();
 		
-		return $this->request($this->url_path('send_document'), $input);
+		return $this->request($this->url_path('send_ubl_document'), $input);
 	}
 }
