@@ -285,10 +285,10 @@ abstract class API {
 				}
 			}
 			elseif($key){
-				$str .= $key.'['.$k.']='.urlencode($v).'&';
+				$str .= $key.'['.$k.']='.urlencode($v ?? '').'&';
 			}
 			else{
-				$str .= $k.'='.urlencode($v).'&';
+				$str .= $k.'='.urlencode($v ?? '').'&';
 			}
 		}
 	}
