@@ -13,7 +13,7 @@ class Scan extends API {
 	
 	private $multiparts 		= [];
 	
-	public function scan_document(string $file_contents, bool $process_skip=false){
+	public function scan_document(string $file_contents, bool $process_skip=false, bool $return_processed_file=false){
 		$this->check_connection();
 		
 		$hash_base = '';
@@ -27,17 +27,19 @@ class Scan extends API {
 		if($process_skip){
 			$data['process']	= 'SKIP';
 		}
+		elseif($return_processed_file){
+			$data['process']	= 'RETURN';
+		}
 		
-		$body = $this->form_json('json', $data, $hash_base);
-		
-		$body .= $this->form_file('file', $file_contents, 'file.pdf', $hash_base);
+		$body = $this->form_json('json', $data, $hash_base)
+				.$this->form_file('file', $file_contents, 'file.pdf', $hash_base);
 		
 		$result = $this->request($this->url_path('scan'), $body, $hash_base, true);
 		
 		return $this->scan_response($result);
 	}
 	
-	public function scan_invoice(string $country, string $vatno, string $file_contents, string $callback='', bool $process_skip=false, int $ocr_delay=0){
+	public function scan_invoice(string $country, string $vatno, string $file_contents, string $callback='', bool $process_skip=false, int $ocr_delay=0, bool $return_processed_file=false){
 		$this->check_connection();
 		
 		$hash_base = '';
@@ -58,10 +60,12 @@ class Scan extends API {
 			$data['process']	= 'SKIP';
 			$data['ocr_delay']	= $ocr_delay;
 		}
+		elseif($return_processed_file){
+			$data['process']	= 'RETURN';
+		}
 		
-		$body = $this->form_json('json', $data, $hash_base);
-		
-		$body .= $this->form_file('file', $file_contents, 'file.pdf', $hash_base);
+		$body = $this->form_json('json', $data, $hash_base)
+				.$this->form_file('file', $file_contents, 'file.pdf', $hash_base);
 		
 		$result = $this->request($this->url_path('scan'), $body, $hash_base, true);
 		

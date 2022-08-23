@@ -83,10 +83,14 @@ abstract class API {
 			$body 		= $this->build_query($post_data);
 			$hash 		= $this->generate_hash($url, $body);
 		}
-		else{
+		elseif(strpos($post_data, $this->multipart_data_start()) === 0){
 			$headers[] 	= $this->header_type(self::CONTENT_MULTIPART, $this->boundary);
 			$body 		= $post_data.'--'.$this->boundary.'--';
 			$hash 		= $this->generate_hash($url, $hash_base);
+		}
+		else{
+			$body 		= $post_data;
+			$hash 		= $this->generate_hash($url, $body);
 		}
 		
 		$headers[] = 'X-Hash: '.$hash;
@@ -207,7 +211,7 @@ abstract class API {
 		
 		$hash_base .= $json;
 		
-		return '--'.$this->boundary.self::CRLF
+		return $this->multipart_data_start()
 			.$this->header_disposition($key).self::CRLF
 			.$this->header_type(self::CONTENT_JSON).self::CRLF
 			.$this->header_length(strlen($json)).self::CRLF.self::CRLF
@@ -217,7 +221,7 @@ abstract class API {
 	protected function form_data(string $key, string $value, string &$hash_base=''): string{
 		$hash_base .= $value;
 		
-		return '--'.$this->boundary.self::CRLF
+		return $this->multipart_data_start()
 			.$this->header_disposition($key).self::CRLF
 			.$this->header_length(strlen($value)).self::CRLF.self::CRLF
 			.$value.self::CRLF;
@@ -228,7 +232,7 @@ abstract class API {
 		
 		$hash_base .= $file;
 		
-		return '--'.$this->boundary.self::CRLF
+		return $this->multipart_data_start()
 			.$this->header_disposition($key, $file_name).self::CRLF
 			.$this->header_type(self::CONTENT_GZIP).self::CRLF
 			.$this->header_length(strlen($file)).self::CRLF.self::CRLF
@@ -239,6 +243,10 @@ abstract class API {
 		if(!$this->socket){
 			throw new Error('No connection is established');
 		}
+	}
+	
+	private function multipart_data_start(): string{
+		return '--'.$this->boundary.self::CRLF;
 	}
 	
 	private function header_disposition(string $name, string $file_name=''): string{
@@ -277,10 +285,10 @@ abstract class API {
 				}
 			}
 			elseif($key){
-				$str .= $key.'['.$k.']='.urlencode($v).'&';
+				$str .= $key.'['.$k.']='.urlencode($v ?? '').'&';
 			}
 			else{
-				$str .= $k.'='.urlencode($v).'&';
+				$str .= $k.'='.urlencode($v ?? '').'&';
 			}
 		}
 	}
