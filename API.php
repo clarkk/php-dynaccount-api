@@ -149,7 +149,13 @@ abstract class API {
 		}
 		
 		if($this->print_response){
-			fwrite(STDERR, "$response\n");
+			//	PHP CLI (Command Line Interface)
+			if(defined('STDERR')){
+				fwrite(STDERR, "$response\n");
+			}
+			else{
+				echo "$response\n";
+			}
 		}
 		
 		if(curl_getinfo($this->socket, CURLINFO_CONTENT_TYPE) == self::CONTENT_JSON){
