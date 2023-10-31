@@ -48,7 +48,7 @@ abstract class API {
 			$this->host 		= $host;
 		}
 		
-		$this->boundary = md5($api_key);
+		$this->boundary = md5($this->api_key);
 	}
 	
 	public function connect(bool $ssl=true, bool $verbose=false, bool $print_response=false, bool $ssl_verify=true){
