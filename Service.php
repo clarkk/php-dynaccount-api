@@ -21,4 +21,17 @@ class Service extends API {
 		
 		return $this->request($this->url_path('send_ubl_document'), $body, $hash_base);
 	}
+	
+	public function edelivery_account(string $action, string $user, int $participant_id, int $vatno, string $country){
+		$this->check_connection();
+		
+		$fields = [
+			'action'			=> $action,
+			'user'				=> $user,
+			'participant_id'	=> $participant_id,
+			'vatno'				=> $vatno,
+			'country'			=> $country
+		];
+		return $this->request($this->url_path('edelivery_account'), $fields);
+	}
 }
