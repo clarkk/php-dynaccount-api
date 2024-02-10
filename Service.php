@@ -26,11 +26,22 @@ class Service extends API {
 		$this->check_connection();
 		
 		$fields = [
-			'action'			=> $action,
-			'user'				=> $user,
-			'vatno'				=> $vatno,
-			'country'			=> $country
+			'action'	=> $action,
+			'user'		=> $user,
+			'vatno'		=> $vatno,
+			'country'	=> $country
 		];
 		return $this->request($this->url_path('edelivery_account'), $fields);
+	}
+	
+	public function edelivery_message(string $action, string $user, string $uuid){
+		$this->check_connection();
+		
+		$fields = [
+			'action'	=> $action,
+			'user'		=> $user,
+			'uuid'		=> $uuid
+		];
+		return $this->request($this->url_path('edelivery_message'), $fields);
 	}
 }
